@@ -15,7 +15,7 @@
  */
 package com.lahodiuk.tic_tac_toe
 
-object Demo extends Application {
+object Demo extends App {
   
   val game = new TicTacToe(
       new HumanTicTacPlayer(),
