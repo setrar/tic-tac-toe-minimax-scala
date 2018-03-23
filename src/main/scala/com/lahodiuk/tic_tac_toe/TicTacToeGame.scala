@@ -15,7 +15,7 @@
  */
 package com.lahodiuk.tic_tac_toe
 
-class TicTacToe(playerOne: BestMoveFinder[TicTacToeState],
+class TicTacToeGame(playerOne: BestMoveFinder[TicTacToeState],
                 playerTwo: BestMoveFinder[TicTacToeState]) {
 
   def play = {

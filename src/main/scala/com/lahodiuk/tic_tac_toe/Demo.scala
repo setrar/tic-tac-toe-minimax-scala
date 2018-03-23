@@ -17,7 +17,7 @@ package com.lahodiuk.tic_tac_toe
 
 object Demo extends App {
   
-  val game = new TicTacToe(
+  val game = new TicTacToeGame(
       new HumanTicTacPlayer(),
       new MinMaxStrategyFinder[TicTacToeState]())
   

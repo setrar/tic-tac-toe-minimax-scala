@@ -17,7 +17,7 @@ package com.lahodiuk.tic_tac_toe
 
 case class Position(row: Int, col: Int)
 
-object TicTacToeRules {
+trait Rules {
 
   type StepOffsetGen = (Position, Int) => Position
 
@@ -30,14 +30,18 @@ object TicTacToeRules {
   def row: StepOffsetGen =
     (pos, offset) => Position(pos.row + offset, pos.col)
 
-  private def column: StepOffsetGen =
+  def column: StepOffsetGen =
     (pos, offset) => Position(pos.row, pos.col + offset)
 
   def winConditionsSatisfied(step: StepOffsetGen)
-                             (positions: Set[Position], winLength: Int): Boolean =
+                            (positions: Set[Position], winLength: Int): Boolean =
     positions exists (position =>
       (0 until winLength) forall (offset =>
         positions contains step(position, offset)))
+}
+
+
+object TicTacToeRules extends Rules {
 
   final val directions = List(leftDiagonal, rightDiagonal, row, column)
 
