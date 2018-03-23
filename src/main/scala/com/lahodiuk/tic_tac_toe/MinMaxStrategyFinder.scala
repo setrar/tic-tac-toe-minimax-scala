@@ -19,17 +19,17 @@ class MinMaxStrategyFinder[S <: State[S]] extends BestMoveFinder[S] {
 
   // Here, and in other methods
   // parameter s - is a current state of the game
-  def move(s: S): S = 
-    if(s.isPlayerOneTurn) firstTurn(s).state
+  def move(s: S): S =
+    if (s.isPlayerOneTurn) firstTurn(s).state
     else secondTurn(s).state
-  
-  def secondTurn(s: S): Outcome = 
+
+  def secondTurn(s: S): Outcome =
     bestMoveFinder(minimize, firstTurn, PLAYER_ONE_WIN, s)
-  
-  def firstTurn(s: S): Outcome = 
+
+  def firstTurn(s: S): Outcome =
     bestMoveFinder(maximize, secondTurn, PLAYER_ONE_LOOSE, s)
-  
-  def bestMoveFinder(strategy: Criteria, opponentMove: S => Outcome, 
+
+  def bestMoveFinder(strategy: Criteria, opponentMove: S => Outcome,
                      worstOutcome: Int, s: S): Outcome = 
     if(s.isGameOver) Outcome(outcomeOfGame(s), s)
     else s.generateStates

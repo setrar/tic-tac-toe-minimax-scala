@@ -20,20 +20,19 @@ class TicTacToe(playerOne: BestMoveFinder[TicTacToeState],
 
   def play = {
     @annotation.tailrec
-    def go(players: List[BestMoveFinder[TicTacToeState]], game: TicTacToeState, moveNumber: Int): Unit = {
-      if (game.isGameOver) {
-        if(game.playerOneWin) println("Player One win!")
-        else if(game.playerTwoWin) println("Player Two win!")
+    def go(players: List[BestMoveFinder[TicTacToeState]], state: TicTacToeState, moveNumber: Int): Unit = {
+      if (state.isGameOver) {
+        if(state.playerOneWin) println("Player One win!")
+        else if(state.playerTwoWin) println("Player Two win!")
         else println("Draw!")
       } else {
         println(s"Player ${moveNumber % 2 + 1} makes move:")
-        val player = players.head
-        val newGame =   player.move(game)
-        println(display(newGame))
-        go(players.tail :+ player, newGame, moveNumber + 1)
+        val nextState =    players.head.move(state)
+        println(display(nextState))
+        go(players.tail :+  players.head, nextState, moveNumber + 1)
       }
     }
-    go(List(playerOne, playerTwo), new TicTacToeState(DIMENSION, DIMENSION), 0)
+    go(List(playerOne, playerTwo), TicTacToeState(DIMENSION, DIMENSION), 0)
   }
 
   def display(game: TicTacToeState) =
