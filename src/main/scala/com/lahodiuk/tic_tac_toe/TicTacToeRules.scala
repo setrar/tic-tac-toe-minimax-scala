@@ -33,8 +33,7 @@ trait Rules {
   def column: StepOffsetGen =
     (pos, offset) => Position(pos.row, pos.col + offset)
 
-  def winConditionsSatisfied(step: StepOffsetGen)
-                            (positions: Set[Position], winLength: Int): Boolean =
+  def winConditionsSatisfied(positions: Set[Position], winLength: Int)(step: StepOffsetGen): Boolean =
     positions exists (position =>
       (0 until winLength) forall (offset =>
         positions contains step(position, offset)))
@@ -46,7 +45,7 @@ object TicTacToeRules extends Rules {
   final val directions = List(leftDiagonal, rightDiagonal, row, column)
 
   def checkWin(positions: Set[Position])(implicit state: TicTacToeState): Boolean =
-    directions.exists(winConditionsSatisfied(_)(positions, state.winLength))
+    directions.exists(winConditionsSatisfied(positions, state.winLength))
 
   def makeMove(p: Position)(implicit state: TicTacToeState): TicTacToeState = {
     assert(state.availablePositions.contains(p))
